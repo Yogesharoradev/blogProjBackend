@@ -10,7 +10,7 @@ router.get("/logout" , Logout)
 router.get("/google", googleAuth);
 
 // Google OAuth callback route
-router.get("/oauth2/redirect/google", passport.authenticate("google", {
+router.get("auth/oauth2/redirect/google", passport.authenticate("google", {
     failureRedirect: "/login",
     session: true 
   }) , googleAuthCallback );
