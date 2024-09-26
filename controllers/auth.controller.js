@@ -1,10 +1,7 @@
 import User from "../models/auth.model.js"
-import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import passport from "passport"
 
-const JWT_SECRET = "aksndkawndkamwkawakdwkdkalldwkk"
-const REF_JWT_SECRET = "asdkwjierhuefhuvbdvaskdanwkjdekfcka"
 
 
 export const Signup =async (req,res)=>{
