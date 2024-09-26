@@ -134,7 +134,7 @@ export const googleAuthCallback = async (req, res) => {
     req.session.userId = user._id; // or use cookies/tokens for auth
     req.session.user =  user.name 
 
-    return res.redirect("https://yuviblogproject.netlify.app/");
+    return res.redirect("https://yuviblogproject.netlify.app");
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error in Google authentication" });
