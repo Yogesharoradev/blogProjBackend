@@ -37,7 +37,7 @@ app.use(
 // CORS configuration
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://yuviblogproject.netlify.app/"], // Your frontend origin
+    origin: ["https://yuviblogproject.netlify.app"], // Your frontend origin
     credentials: true, // Allow credentials
   })
 );
