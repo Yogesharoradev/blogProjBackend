@@ -25,7 +25,7 @@ app.use(
     saveUninitialized: false,
     cookie: { secure: false },
     store: MongoStore.create({
-      mongoUrl: "mongodb://localhost:27017/blog",
+      mongoUrl: process.env.DB_URL,
       collectionName: "sessions",
     }),
     cookie: {
