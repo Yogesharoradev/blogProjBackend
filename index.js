@@ -11,6 +11,7 @@ import bodyParser from "body-parser";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import User from "./models/auth.model.js";
+import { Generate } from "./lib/gemini.lib.js";
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use(
     },
   })
 );
+
 
 // CORS configuration
 app.use(
@@ -85,7 +87,7 @@ passport.use(
       }
     }
   )
-);
+)
 
 // Initialize passport and sessions
 app.use(passport.initialize());
@@ -100,6 +102,8 @@ app.get("/api/user", (req, res) => {
   }
   res.json({ id: req.user._id, name: req.user.name, email: req.user.email });
 });
+
+app.get("/api/gemini" , Generate)
 
 // Start server
 app.listen(8080, () => {
