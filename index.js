@@ -103,7 +103,7 @@ app.get("/api/user", (req, res) => {
   res.json({ id: req.user._id, name: req.user.name, email: req.user.email });
 });
 
-app.get("/api/gemini" , Generate)
+app.post("/api/gemini" , Generate)
 
 // Start server
 app.listen(8080, () => {
