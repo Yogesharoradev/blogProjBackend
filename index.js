@@ -35,14 +35,15 @@ app.use(
   })
 );
 
-
 // CORS configuration
 app.use(
   cors({
-    origin: ["https://yuviblogproject.netlify.app"], // Your frontend origin
-    credentials: true, // Allow credentials
+    origin: ["https://yuviblogproject.netlify.app", "http://localhost:5173"], 
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
   })
 );
+
 
 // Body parsers
 app.use(bodyParser.urlencoded({ extended: false }));
