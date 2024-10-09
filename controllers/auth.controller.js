@@ -113,30 +113,34 @@ export const googleAuth = (req, res, next) => {
   passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
 };
 
-// Google Auth callback
 export const googleAuthCallback = async (req, res) => {
   try {
     const { email, displayName, id: googleId } = req.user;
+    console.log("Google Auth Callback - User Data:", req.user); // Log the user data here
 
     // Check if the user exists in the database
     let user = await User.findOne({ email });
-    
+    console.log("Checking for user in DB"); // Log this to see if it's being executed
+
     if (!user) {
       // Create a new user if they don't exist
       user = await User.create({
         googleId,
         email,
-        name : displayName ,
-       
+        name: displayName,
       });
+      console.log("Created new user:", user); // Log the new user creation
+    } else {
+      console.log("User found in DB:", user); // Log if user already exists
     }
-    // Set session or token for the logged-in user
-    req.session.userId = user._id; // or use cookies/tokens for auth
-    req.session.user =  user.name 
 
-    return res.redirect("https://yuviblogproject.netlify.app");
+    req.session.userId = user._id; // Store user ID in session
+    req.session.user = { id: user._id, name: user.name, email: user.email }; // Store user info in session
+    console.log("Session set with user data:", req.session.user); // Log session data
+
+    return res.redirect("https://yuviblogproject.netlify.app"); // Redirect to frontend
   } catch (error) {
-    console.error(error);
+    console.error("Error in Google authentication:", error); // Log any errors
     return res.status(500).json({ message: "Error in Google authentication" });
   }
 };

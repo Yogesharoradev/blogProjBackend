@@ -89,23 +89,41 @@ passport.use(
   )
 )
 
-// Initialize passport and sessions
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routers
-app.use("/auth", AuthRouter); // Authentication routes
-app.use("/", blogRouter); // Blog routes
+
+app.use("/auth", AuthRouter); 
+app.use("/", blogRouter); 
+
 app.get("/api/user", (req, res) => {
-  if (!req.user) {
-    return res.status(401).json({ message: "Not authenticated" });
+
+  try{
+    console.log("API User endpoint hit"); 
+    if (!req.session.userId) {
+      return res.status(402).json({ message: "Not authenticated" });
+    }
+    console.log("Session data:", req.session); 
+    return res.status(200).json({ 
+      message: 'User logged in successfully',
+      user: {
+        _id: req.session.user.id,  
+        name: req.session.user.name, 
+        email: req.session.user.email,
+      },
+  });
+ 
+  }catch(err){
+    console.log(err)
+    return res.status(500).json({ message: "Not authenticated" });
   }
-  res.json({ id: req.user._id, name: req.user.name, email: req.user.email });
 });
+ 
 
 app.post("/api/gemini" , Generate)
 
-// Start server
+
 app.listen(8080, () => {
   console.log("Server running on port 8080");
 });
